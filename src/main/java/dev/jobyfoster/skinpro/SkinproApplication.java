@@ -27,6 +27,8 @@ public class SkinproApplication {
 			newUser.setRole(Role.ADMIN);
 			newUser.setPoints(0);
 			newUser.setPassword(new BCryptPasswordEncoder().encode("admin"));
+
+			userRepository.save(newUser);
 		}
 	}
 }
