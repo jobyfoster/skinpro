@@ -43,6 +43,13 @@ a:hover {
     cursor: not-allowed; 
 }
 
+#currentDate {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
 
 #loadingScreen {
     visibility: hidden;
