@@ -11,12 +11,12 @@ public class ErrorHandlingController {
     @ExceptionHandler(JsonProcessingException.class)
     public String handleJsonProcessingException(JsonProcessingException exception, Model model) {
         model.addAttribute("errorMessage", "Error processing JSON data. Please try again.");
-        return "error"; // Redirect to a generic error page
+        return "error";
     }
 
     @ExceptionHandler(Exception.class)
     public String handleGenericException(Exception exception, Model model) {
         model.addAttribute("errorMessage", "An unexpected error occurred. Please try again.");
-        return "error"; // Redirect to a generic error page
+        return "error";
     }
 }
