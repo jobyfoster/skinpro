@@ -41,9 +41,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-
-
     /**
      * Awards 5 points to a user for their daily login activity.
      *
@@ -63,8 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * TODO: Implement the logic to check a user's 7-day streak and award 50 bonus points if applicable.
-     * Currently, it awards 50 points without checking the 7-day streak condition.
+     * Currently, it awards 50 points by checking if the user has a 7 day streak
      *
      * @param userId the ID of the user to check for a streak and potentially award points to
      */
@@ -74,7 +70,6 @@ public class UserServiceImpl implements UserService {
             addPoints(userId, 50);
             user.setStreak(0);
         }
-         // Example, implement checking logic
     }
 
     public void streakLogic(SigninRequest signinRequest){
