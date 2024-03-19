@@ -41,9 +41,21 @@
                         </li>
                     </th:block>
                 </ul>
-                <button id="morning-complete"
-                        th:classappend="${isDayRoutineCompletedToday} ? 'disabled'"
-                        class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full transition duration-300 ease-in-out transform hover:scale-105">Mark Complete</button>
+
+                <!-- Button shown when the routine is completed today (disabled appearance) -->
+                <!-- Morning Routine Complete Button -->
+                <a th:if="${!isDayRoutineCompletedToday}"
+                   href="api/v1/user/completed/day"
+                   class="block mt-4 bg-green-500 text-white hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full text-center transition duration-300 ease-in-out transform hover:scale-105">
+                    Mark Complete
+                </a>
+
+                <div th:if="${isDayRoutineCompletedToday}"
+                     id="morning-complete"
+                     class="mt-4 bg-gray-400 text-white font-bold py-2 px-4 rounded w-full text-center">
+                    Completed
+                </div>
+
             </div>
 
             <!-- Night Routine -->
@@ -61,10 +73,19 @@
                         </li>
                     </th:block>
                 </ul>
-                <button id="night-complete"
-                        th:disabled="${isNightRoutineCompletedToday}"
-                        th:classappend="${isNightRoutineCompletedToday} ? 'disabled'"
-                        class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full transition duration-300 ease-in-out transform hover:scale-105">Mark Complete</button>
+                <!-- Button shown when the night routine is completed today (disabled appearance) -->
+                <a th:if="${!isNightRoutineCompletedToday}"
+                   href="api/v1/user/completed/night"
+                   class="block mt-4 bg-green-500 text-white hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full text-center transition duration-300 ease-in-out transform hover:scale-105">
+                    Mark Complete
+                </a>
+
+                <div th:if="${isNightRoutineCompletedToday}"
+                     id="night-complete"
+                     class="mt-4 bg-gray-400 text-white font-bold py-2 px-4 rounded w-full text-center">
+                    Completed
+                </div>
+
             </div>
         </div>
     </div>
@@ -94,8 +115,6 @@
             var nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
             var button = document.getElementById(buttonId);
 
-            button.disabled = true;
-
             var updateCountdown = function () {
                 var now = new Date().getTime();
                 var distance = nextDay - now;
@@ -108,7 +127,6 @@
 
                 if (distance < 0) {
                     clearInterval(countdownTimer);
-                    button.disabled = false;
                     button.innerHTML = 'Mark Complete'; // Reset button text
                 }
             };

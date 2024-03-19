@@ -12,4 +12,5 @@ public interface UserService {
     void checkAndAwardStreakBonus(User user);
 
     void streakLogic(Optional<User> user);
+    void completeSkincareRoutine(Long userId);
 }

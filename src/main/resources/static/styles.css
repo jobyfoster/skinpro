@@ -37,8 +37,17 @@ a:hover {
     background-color: #1a202c;
 }
 
-.disabled {
-    background-color: #ccc; 
-    color: #d2d6dc;
+.btn-enabled {
+    background-color: #48bb78; /* green-500 */
+}
+
+.btn-enabled:hover, .btn-enabled:focus {
+    background-color: #38a169; /* green-700 */
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.btn-disabled {
+    background-color: #a0aec0; /* gray-400 */
     cursor: not-allowed;
 }
