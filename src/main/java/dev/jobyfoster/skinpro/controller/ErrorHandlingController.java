@@ -1,5 +1,6 @@
 package dev.jobyfoster.skinpro.controller;
 
+import com.azure.json.implementation.jackson.core.JsonProcessingException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -7,10 +8,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ErrorHandlingController {
 
-    @ExceptionHandler(value = Exception.class)
-    public String handleException(Exception e, Model model) {
-        model.addAttribute("errorMessage", e.getMessage());
-        // You can add more detailed error handling here based on different exception types
-        return "error"; // This is the name of the Thymeleaf template we will create
+    @ExceptionHandler(JsonProcessingException.class)
+    public String handleJsonProcessingException(JsonProcessingException exception, Model model) {
+        model.addAttribute("errorMessage", "Error processing JSON data. Please try again.");
+        return "error"; // Redirect to a generic error page
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String handleGenericException(Exception exception, Model model) {
+        model.addAttribute("errorMessage", "An unexpected error occurred. Please try again.");
+        return "error"; // Redirect to a generic error page
     }
 }

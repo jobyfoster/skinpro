@@ -20,6 +20,7 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         // Creates a new User object and sets its properties based on the signup request and defaults.
         User user = new User();
         user.setPoints(0); // Initializes points to 0 for a new user.
-        user.setLastLogin(new Date(System.currentTimeMillis())); // Sets the last login to the current time.
+        user.setLastLogin(LocalDate.now()); // Sets the last login to the current time.
         user.setStreak(0); // Initializes streak to 0 for a new user.
         user.setEnabled(true); // Enables the new user account by default.
         user.setEmail(signupRequest.getEmail()); // Sets email from the signup request.

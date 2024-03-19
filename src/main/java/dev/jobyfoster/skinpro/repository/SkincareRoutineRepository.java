@@ -5,9 +5,10 @@ import dev.jobyfoster.skinpro.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface SkincareRoutineRepository extends JpaRepository<SkincareRoutine, Long> {
-    Optional<SkincareRoutine> findByUserId(Long userId);
+    List<SkincareRoutine> findByUserId(Long userId);
 }

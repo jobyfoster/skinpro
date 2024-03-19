@@ -4,41 +4,53 @@ import com.azure.ai.openai.OpenAIClient;
 import com.azure.ai.openai.OpenAIClientBuilder;
 import com.azure.ai.openai.models.*;
 import com.azure.core.credential.KeyCredential;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OpenAIServiceImpl implements OpenAIService {
 
-    private OpenAIClient client;
+    private final OpenAIClient client;
 
-    public OpenAIServiceImpl(@Value("${OPENAI_API_KEY}") String openAiApiKey) {
+    public OpenAIServiceImpl() {
+        Dotenv dotenv = Dotenv.load(); // Load the .env file
+        String apiKey = dotenv.get("OPENAI_API_KEY"); // Access the OPENAI_API_KEY variable
         this.client = new OpenAIClientBuilder()
-                .credential(new KeyCredential(openAiApiKey))
+                .credential(new KeyCredential(apiKey))
                 .buildClient();
     }
 
-    public void generateSkincareRoutine(String userQuery) {
+    public String generateSkincareRoutine(String userQuery) {
+        String systemPrompt = """
+Craft a day and night skincare routine tailored to user needs, segmented into steps. Each step should include a sequence number, action description, and product suggestion. Ensure routines address goals like cleansing and moisturizing.
+Format response as a JSON object with 'day' and 'night' keys, each containing a 'steps' array. For 'steps', include:
+stepNumber: Sequence of the step.
+description: Purpose and application method.
+productRecommendation: { "productName": "...", "descriptor": "..." }
+Aim for concise, practical advice with real product examples.
+""";
         try {
-            List<ChatRequestMessage> chatMessages = new ArrayList<>();
-            chatMessages.add(new ChatRequestSystemMessage("You are a skincare expert."));
-            chatMessages.add(new ChatRequestUserMessage(userQuery));
+            List<ChatRequestMessage> chatMessages = List.of(
+                    new ChatRequestSystemMessage(systemPrompt),
+                    new ChatRequestUserMessage(userQuery));
 
-            ChatCompletions chatCompletions = client.getChatCompletions("gpt-4-0125-preview",
-                    new ChatCompletionsOptions(chatMessages));
+            ChatCompletionsOptions chatCompletionsOptions = new ChatCompletionsOptions(chatMessages);
+            chatCompletionsOptions.setResponseFormat(new ChatCompletionsJsonResponseFormat());
 
-            for (ChatChoice choice : chatCompletions.getChoices()) {
-                ChatResponseMessage message = choice.getMessage();
-                // Replace System.out.println with appropriate logging
-                System.out.println("Generated Skincare Routine:");
-                System.out.println(message.getContent());
-            }
+            ChatCompletions chatCompletions = client.getChatCompletions("gpt-4-0125-preview", chatCompletionsOptions);
+
+            return chatCompletions.getChoices().stream()
+                    .map(choice -> choice.getMessage().getContent())
+                    .findFirst()
+                    .orElse("Routine generation failed. Please try again later.");
         } catch (Exception e) {
-            // Replace System.out.println with appropriate logging
-            System.out.println("Failed to generate skincare routine");
+            // Log the error for debugging purposes
+            System.out.println(e.getMessage());
+            return "An error occurred while generating the skincare routine. Please try again later.";
         }
+
     }
 }

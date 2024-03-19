@@ -7,15 +7,15 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "skincare_routines")
+@Table(name = "routine_steps")
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoutineStep {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "skincare_routine_id", nullable = false)
     private SkincareRoutine skincareRoutine;
 
@@ -23,9 +23,9 @@ public class RoutineStep {
     private int stepNumber;
 
     @Column(nullable = false, length = 1024)
-    private String description; // Description can include the action and product recommendation
+    private String description;
 
     @Column(nullable = true)
-    private String productRecommendation; // Add to RoutineStep for specific product suggestions
+    private String productRecommendation;
 }
 

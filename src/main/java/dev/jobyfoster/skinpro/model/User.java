@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -39,7 +40,7 @@ public class User implements UserDetails {
 
     // Stores the last login date.
     @Temporal(TemporalType.DATE)
-    private Date lastLogin;
+    private LocalDate lastLogin;
 
     // Indicates whether the user is enabled or not. Defaults to true.
     private boolean enabled = true;

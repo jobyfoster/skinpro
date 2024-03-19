@@ -22,7 +22,7 @@ public class SkincareRoutine {
     private Long userId;
 
     @Column(nullable = false)
-    private String routineType; // "day" or "night"
+    private String routineType;
 
     @OneToMany(mappedBy = "skincareRoutine", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RoutineStep> steps = new ArrayList<>();

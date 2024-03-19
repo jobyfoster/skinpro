@@ -1,8 +1,12 @@
 package dev.jobyfoster.skinpro.controller;
 
+import com.azure.core.annotation.Get;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import dev.jobyfoster.skinpro.model.SkincareRoutine;
 import dev.jobyfoster.skinpro.model.SurveyResponse;
 import dev.jobyfoster.skinpro.model.User;
 import dev.jobyfoster.skinpro.repository.UserRepository;
+import dev.jobyfoster.skinpro.service.OpenAIService;
 import dev.jobyfoster.skinpro.service.SkincareService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,39 +26,67 @@ import java.util.Optional;
 public class AppController {
     private final SkincareService skincareService;
     private final UserRepository userRepository;
+    private final OpenAIService openAIService;
 
     @Autowired
-    public AppController(SkincareService skincareService, UserRepository userRepository) {
+    public AppController(SkincareService skincareService, UserRepository userRepository, OpenAIService openAIService) {
         this.skincareService = skincareService;
         this.userRepository = userRepository;
+        this.openAIService = openAIService;
     }
 
-    @GetMapping("/dashboard")
+    @GetMapping(path = "/dashboard")
     public String dashboard(HttpServletRequest request, Model model, Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Optional<User> user = userRepository.findByUsername(userDetails.getUsername());
-        if(user.isEmpty()){
-            model.addAttribute("errorMessage", "Invalid username.");
-            return "error"; // Directly show the error page with a message
+        if (user.isEmpty()) {
+            model.addAttribute("errorMessage", "Invalid username. Please log in again.");
+            return "error"; // Consider having a specific login error page or general error page with this message.
         }
         Long userId = user.get().getId();
 
-        boolean surveyCompleted = skincareService.hasCompletedSurvey(userId);
-        if (!surveyCompleted) {
-            // Redirect or notify the user to complete the survey
-            return "redirect:/survey"; // Adjust based on your survey page
+        try {
+            if (!skincareService.hasCompletedSurvey(userId)) {
+                return "redirect:/survey";
+            }
+
+            Optional<SurveyResponse> surveyResponse = skincareService.getSurveyResponseByUserId(userId);
+            if (surveyResponse.isEmpty()) {
+                model.addAttribute("errorMessage", "Please complete the survey to get your personalized skincare routines.");
+                return "redirect:/error";
+            }
+
+            if (!skincareService.hasAssignedRoutines(userId)) {
+                String userQuery = generateUserQuery(surveyResponse.get());
+                try {
+                    String routine = openAIService.generateSkincareRoutine(userQuery);
+                    skincareService.saveRoutine(routine, userId);
+                } catch (Exception e) {
+                    model.addAttribute("errorMessage", "Failed to generate skincare routine. Please try again later.");
+                    return "redirect:/error";
+                }
+                return "redirect:/dashboard";
+            }
+
+            model.addAttribute("user", userDetails);
+            return "dashboard";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "An unexpected error occurred. Please try again.");
+            return "error";
         }
-
-//        boolean routinesAssigned = skincareService.hasAssignedRoutines(userId);
-//        if (!routinesAssigned) {
-//            // Handle the case where no routines are assigned yet
-//            model.addAttribute("errorMessage", "Please complete the survey to get your personalized skincare routines.");
-//            return "redirect:/error"; // Adjust as needed
-//        }
-
-        model.addAttribute("user", userDetails);
-        return "dashboard";
     }
+
+    private String generateUserQuery(SurveyResponse surveyResponse) {
+        return String.format("Create a skincare routine for someone with %s skin type, concerned about %s. " +
+                        "Their skin %s to new skincare products. They are in the %s age range and are %s exposed to the sun without protection.",
+                surveyResponse.getSkinType().toLowerCase(),
+                surveyResponse.getMainSkinConcern().toLowerCase(),
+                surveyResponse.getReactionToNewProducts().toLowerCase(),
+                surveyResponse.getAgeRange().toLowerCase(),
+                surveyResponse.getSunExposure().toLowerCase());
+    }
+
+
 
     @GetMapping("/signup")
     public String signUp() {
