@@ -1,4 +1,3 @@
-
 body {
     background-color: #171923;
     color: #ffffff;
@@ -38,9 +37,8 @@ a:hover {
     background-color: #1a202c;
 }
 
-
 .disabled {
     background-color: #ccc; 
     color: #d2d6dc;
-    cursor: not-allowed; 
+    cursor: not-allowed;
 }
