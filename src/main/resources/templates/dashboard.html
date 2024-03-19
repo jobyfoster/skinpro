@@ -1,10 +1,74 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkinPro Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" />
 </head>
 <body>
-<h1>Dashboard</h1>
-<p>Welcome back, <span th:text="${user.username}">User</span>!</p>
+<div class="mx-auto py-12">
+    <nav class="navbar">
+        <div class="navbar-content">
+            <h1 class="text-4xl font-bold">SkinPro</h1>
+            <div id="currentDate" class="navbar-date">
+                <p class="text-white"><span id="date"></span></p>
+            </div>
+            <div class="navbar-links">
+                <span class="text-white ml-4" id="points">Points: 0</span>
+                <span class="text-white ml-4" th:text="${user.username}"></span>
+                <a href="logout" class="text-white ml-4 navbar-link" id="logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto mt-8 flex justify-between">
+        <div class="navcolor text-white p-6 rounded w-1/2 mr-4">
+            <h2 class="text-xl font-bold mb-4 text-center">Morning Routine</h2>
+            <ol class="list-decimal text-center">
+                <li>Wash</li>
+                <li>Cleanse</li>
+                <li>Moisturize</li>
+
+            </ol>
+            <button id="morning-complete" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">Mark Complete</button>
+        </div>
+        <div class="navcolor text-white p-6 rounded w-1/2 ml-4">
+            <h2 class="text-xl font-bold mb-4 text-center">Night Routine</h2>
+            <ol class="list-decimal text-center">
+                <li>Wash</li>
+                <li>Cleanse</li>
+                <li>Moisturize</li>
+
+            </ol>
+            <button id="night-complete" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">Mark Complete</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let currentDate = new Date();
+    let options = { year: 'numeric', month: 'long', day: 'numeric' };
+    let formattedDate = currentDate.toLocaleDateString('en-US', options);
+
+
+    document.getElementById("date").innerHTML = formattedDate;
+
+
+    document.getElementById("morning-complete").addEventListener("click", function() {
+        this.disabled = true;
+        this.classList.add("disabled");
+        this.classList.remove("bg-blue-500", "hover:bg-blue-700");
+    });
+
+
+    document.getElementById("night-complete").addEventListener("click", function() {
+        this.disabled = true;
+        this.classList.add("disabled");
+        this.classList.remove("bg-blue-500", "hover:bg-blue-700");
+    });
+</script>
 </body>
 </html>

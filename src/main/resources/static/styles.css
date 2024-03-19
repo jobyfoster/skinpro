@@ -1,0 +1,46 @@
+body {
+    background-color: #171923;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+a {
+    color: #90cdf4;
+}
+a:hover {
+    color: #63b3ed;
+}
+.navbar {
+    background-color: #1a202c;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    padding: 1rem;
+}
+.navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar-links {
+    display: flex;
+}
+.navbar-link {
+    margin-right: 1rem;
+}
+.navbar-link:hover {
+    color: #90cdf4;
+}
+
+.navcolor {
+    background-color: #1a202c;
+}
+
+
+.disabled {
+    background-color: #ccc; 
+    color: #d2d6dc;
+    cursor: not-allowed; 
+}
+

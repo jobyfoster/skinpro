@@ -1,25 +1,41 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Login</title>
-</head>
-<body>
-<div th:if="${error}">
-    <p th:text="${error}"></p>
-</div>
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SkinPro</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" />
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="navbar-content">
+                <h1 class="text-4xl font-bold">SkinPro</h1>
+                <a href="signup" class="text-white">Register</a>
+            </div>
+        </nav>
 
-<form th:action="@{/api/v1/auth/signin}" method="post">
-    <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required autofocus/>
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required/>
-    </div>
-    <div>
-        <button type="submit">Sign In</button>
-    </div>
-</form>
-</body>
-</html>
+        <div class="mx-auto py-24">
+            <div class="max-w-md mx-auto p-8 navcolor rounded shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
+                <div th:if="${error}">
+                    <p th:text="${error}"></p>
+                </div>
+
+                <form th:action="@{/api/v1/auth/signin}" method="post">
+                    <div class="mb-4">
+                        <label for="username" class="block text-white">Username:</label>
+                        <input type="text" id="username" name="username" class="w-full px-3 py-2 border rounded text-gray-800" required autofocus>
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="block text-white">Password:</label>
+                        <input type="password" id="password" name="password" class="w-full px-3 py-2 border rounded text-gray-800" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+    </html>
