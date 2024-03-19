@@ -13,8 +13,14 @@
             <div class="navbar-content">
                 <h1 class="text-4xl font-bold">SkinPro</h1>
                 <div class="navbar-links">
-                    <a href="signup" class="navbar-link">Register</a>
-                    <a href="login" class="navbar-link">Login</a>
+                    <th:block th:if="${isLoggedIn}">
+                        <a href="dashboard" class="navbar-link">Dashboard</a>
+                        <a href="logout" class="navbar-link">Logout</a>
+                    </th:block>
+                    <th:block th:unless="${isLoggedIn}">
+                        <a href="login" class="navbar-link">Login</a>
+                        <a href="signup" class="navbar-link">Register</a>
+                    </th:block>
                 </div>
             </div>
         </nav>

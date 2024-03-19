@@ -39,8 +39,10 @@ public class AppController {
         this.openAIService = openAIService;
         this.userService = userService;
     }
-    @GetMapping(path = "/")
-    public String home(HttpServletRequest request, Model model, Authentication authentication) {
+    @GetMapping
+    public String home(Model model, Authentication authentication) {
+        boolean isLoggedIn = authentication.isAuthenticated();
+        model.addAttribute("isLoggedIn", isLoggedIn);
         return "home";
     }
 
