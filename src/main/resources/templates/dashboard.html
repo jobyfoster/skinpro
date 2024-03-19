@@ -41,7 +41,21 @@
                         </li>
                     </th:block>
                 </ul>
-                <button id="morning-complete" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full transition duration-300 ease-in-out transform hover:scale-105">Mark Complete</button>
+
+                <!-- Button shown when the routine is completed today (disabled appearance) -->
+                <!-- Morning Routine Complete Button -->
+                <a th:if="${!isDayRoutineCompletedToday}"
+                   href="api/v1/user/completed/day"
+                   class="block mt-4 bg-green-500 text-white hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full text-center transition duration-300 ease-in-out transform hover:scale-105">
+                    Mark Complete
+                </a>
+
+                <div th:if="${isDayRoutineCompletedToday}"
+                     id="morning-complete"
+                     class="mt-4 bg-gray-400 text-white font-bold py-2 px-4 rounded w-full text-center">
+                    Completed
+                </div>
+
             </div>
 
             <!-- Night Routine -->
@@ -59,7 +73,19 @@
                         </li>
                     </th:block>
                 </ul>
-                <button id="night-complete" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full transition duration-300 ease-in-out transform hover:scale-105">Mark Complete</button>
+                <!-- Button shown when the night routine is completed today (disabled appearance) -->
+                <a th:if="${!isNightRoutineCompletedToday}"
+                   href="api/v1/user/completed/night"
+                   class="block mt-4 bg-green-500 text-white hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full text-center transition duration-300 ease-in-out transform hover:scale-105">
+                    Mark Complete
+                </a>
+
+                <div th:if="${isNightRoutineCompletedToday}"
+                     id="night-complete"
+                     class="mt-4 bg-gray-400 text-white font-bold py-2 px-4 rounded w-full text-center">
+                    Completed
+                </div>
+
             </div>
         </div>
     </div>
@@ -75,19 +101,40 @@
 
     document.getElementById("date").innerHTML = formattedDate;
 
+    document.addEventListener('DOMContentLoaded', function () {
+        var isDayRoutineCompletedToday = [[${isDayRoutineCompletedToday}]];
+        var isNightRoutineCompletedToday = [[${isNightRoutineCompletedToday}]];
 
-    document.getElementById("morning-complete").addEventListener("click", function() {
-        this.disabled = true;
-        this.classList.add("disabled");
-        this.classList.remove("bg-blue-500", "hover:bg-blue-700");
+        setupRoutineCountdown(isDayRoutineCompletedToday, 'morning-complete');
+        setupRoutineCountdown(isNightRoutineCompletedToday, 'night-complete');
     });
 
+    function setupRoutineCountdown(isRoutineCompletedToday, buttonId) {
+        if (isRoutineCompletedToday) {
+            var now = new Date();
+            var nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+            var button = document.getElementById(buttonId);
 
-    document.getElementById("night-complete").addEventListener("click", function() {
-        this.disabled = true;
-        this.classList.add("disabled");
-        this.classList.remove("bg-blue-500", "hover:bg-blue-700");
-    });
+            var updateCountdown = function () {
+                var now = new Date().getTime();
+                var distance = nextDay - now;
+
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                button.innerHTML = 'Available in ' + hours + "h " + minutes + "m " + seconds + "s ";
+
+                if (distance < 0) {
+                    clearInterval(countdownTimer);
+                    button.innerHTML = 'Mark Complete'; // Reset button text
+                }
+            };
+
+            var countdownTimer = setInterval(updateCountdown, 1000);
+        }
+    }
+
 </script>
 </body>
 </html>
