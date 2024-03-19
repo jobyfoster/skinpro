@@ -77,8 +77,7 @@ public class UserServiceImpl implements UserService {
          // Example, implement checking logic
     }
 
-    public void streakLogic(SigninRequest signinRequest){
-        User user = userRepository.findByUsername(signinRequest.getUsername()).get();
+    public void streakLogic(User user){
         LocalDate date = LocalDate.now();
         if (date.getDayOfMonth() - user.getLastLogin().getDayOfMonth() == 1){
             user.setLastLogin(LocalDate.now());
