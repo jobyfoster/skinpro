@@ -10,5 +10,5 @@ public interface UserService {
 
     void checkAndAwardStreakBonus(Long userId);
 
-    void streakLogic(SigninRequest signinRequest);
+    void streakLogic(User user);
 }

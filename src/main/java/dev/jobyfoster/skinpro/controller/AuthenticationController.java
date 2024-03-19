@@ -67,7 +67,8 @@ public class AuthenticationController {
             // Attempt to sign in the user with the provided credentials
             authenticationService.signIn(signinRequest, request, response);
             // On success, redirect to the user dashboard
-            userService.streakLogic(signinRequest);
+            User user = userRepository.findByUsername(signinRequest.getUsername()).get();
+            userService.streakLogic(user);
             return "redirect:/dashboard";
         } catch (AuthenticationException e) {
             // On failure, add an error message and redirect back to the login page
