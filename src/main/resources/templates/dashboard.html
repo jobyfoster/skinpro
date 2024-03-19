@@ -41,7 +41,9 @@
                         </li>
                     </th:block>
                 </ul>
-                <button id="morning-complete" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full transition duration-300 ease-in-out transform hover:scale-105">Mark Complete</button>
+                <button id="morning-complete"
+                        th:classappend="${isDayRoutineCompletedToday} ? 'disabled'"
+                        class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full transition duration-300 ease-in-out transform hover:scale-105">Mark Complete</button>
             </div>
 
             <!-- Night Routine -->
@@ -59,7 +61,10 @@
                         </li>
                     </th:block>
                 </ul>
-                <button id="night-complete" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full transition duration-300 ease-in-out transform hover:scale-105">Mark Complete</button>
+                <button id="night-complete"
+                        th:disabled="${isNightRoutineCompletedToday}"
+                        th:classappend="${isNightRoutineCompletedToday} ? 'disabled'"
+                        class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full transition duration-300 ease-in-out transform hover:scale-105">Mark Complete</button>
             </div>
         </div>
     </div>
@@ -75,19 +80,43 @@
 
     document.getElementById("date").innerHTML = formattedDate;
 
+    document.addEventListener('DOMContentLoaded', function () {
+        var isDayRoutineCompletedToday = [[${isDayRoutineCompletedToday}]];
+        var isNightRoutineCompletedToday = [[${isNightRoutineCompletedToday}]];
 
-    document.getElementById("morning-complete").addEventListener("click", function() {
-        this.disabled = true;
-        this.classList.add("disabled");
-        this.classList.remove("bg-blue-500", "hover:bg-blue-700");
+        setupRoutineCountdown(isDayRoutineCompletedToday, 'morning-complete');
+        setupRoutineCountdown(isNightRoutineCompletedToday, 'night-complete');
     });
 
+    function setupRoutineCountdown(isRoutineCompletedToday, buttonId) {
+        if (isRoutineCompletedToday) {
+            var now = new Date();
+            var nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+            var button = document.getElementById(buttonId);
 
-    document.getElementById("night-complete").addEventListener("click", function() {
-        this.disabled = true;
-        this.classList.add("disabled");
-        this.classList.remove("bg-blue-500", "hover:bg-blue-700");
-    });
+            button.disabled = true;
+
+            var updateCountdown = function () {
+                var now = new Date().getTime();
+                var distance = nextDay - now;
+
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                button.innerHTML = 'Available in ' + hours + "h " + minutes + "m " + seconds + "s ";
+
+                if (distance < 0) {
+                    clearInterval(countdownTimer);
+                    button.disabled = false;
+                    button.innerHTML = 'Mark Complete'; // Reset button text
+                }
+            };
+
+            var countdownTimer = setInterval(updateCountdown, 1000);
+        }
+    }
+
 </script>
 </body>
 </html>

@@ -1,7 +1,5 @@
 package dev.jobyfoster.skinpro.controller;
 
-import com.azure.core.annotation.Get;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.jobyfoster.skinpro.model.SkincareRoutine;
 import dev.jobyfoster.skinpro.model.SurveyResponse;
 import dev.jobyfoster.skinpro.model.User;
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
 
 @Controller
 public class AppController {
@@ -53,7 +52,6 @@ public class AppController {
         // Redirects to an error page if the username does not exist in the database.
         if (user.isEmpty()) {
             model.addAttribute("errorMessage", "Invalid username. Please log in again.");
-            // TODO: Consider having a specific login error page or general error page with this message.
             return "error";
         }
         Long userId = user.get().getId();
@@ -87,6 +85,14 @@ public class AppController {
             // Adds the UserDetails to the model and returns the "dashboard" view if no errors occur.
             List<SkincareRoutine> dayRoutine = skincareService.getDayRoutine(userId);
             List<SkincareRoutine> nightRoutine = skincareService.getNightRoutine(userId);
+
+            LocalDate today = LocalDate.now();
+            boolean isDayRoutineCompletedToday = dayRoutine.stream().anyMatch(r -> today.equals(r.getLastCompleted()));
+            boolean isNightRoutineCompletedToday = nightRoutine.stream().anyMatch(r -> today.equals(r.getLastCompleted()));
+
+            model.addAttribute("isDayRoutineCompletedToday", isDayRoutineCompletedToday);
+            model.addAttribute("isNightRoutineCompletedToday", isNightRoutineCompletedToday);
+
             userService.streakLogic(user);
             model.addAttribute("dayRoutine", dayRoutine);
             model.addAttribute("nightRoutine", nightRoutine);

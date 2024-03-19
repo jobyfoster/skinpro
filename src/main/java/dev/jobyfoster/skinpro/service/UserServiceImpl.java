@@ -77,22 +77,27 @@ public class UserServiceImpl implements UserService {
             LocalDate lastLogin = user.getLastLogin();
             long daysBetween = ChronoUnit.DAYS.between(lastLogin, today);
 
-            if (daysBetween == 1) {
-                // User logged in consecutively
-                user.setStreak(user.getStreak() + 1);
+            // Check if the last login was not today
+            if (daysBetween >= 1) {
+                // Award daily login points if the last login wasn't today
+                awardDailyLoginPoints(user.getId());
+
+                if (daysBetween == 1) {
+                    // User logged in consecutively
+                    user.setStreak(user.getStreak() + 1);
+                    checkAndAwardStreakBonus(user); // Pass user directly to avoid redundant lookup
+                } else {
+                    // Reset streak if not consecutive days or the first login after a break
+                    user.setStreak(0);
+                }
+
+                // Update the last login date to today regardless of streak logic
                 user.setLastLogin(today);
-                checkAndAwardStreakBonus(user); // Pass user directly to avoid redundant lookup
-            } else if (daysBetween > 1) {
-                // Reset streak if not consecutive days
-                user.setLastLogin(today);
-                user.setStreak(0);
+
+                // Assuming save/update method exists
+                userRepository.save(user);
             }
-
-
-            awardDailyLoginPoints(user.getId());
-
-            // Assuming save/update method exists
-            userRepository.save(user);
         });
     }
+
 }
