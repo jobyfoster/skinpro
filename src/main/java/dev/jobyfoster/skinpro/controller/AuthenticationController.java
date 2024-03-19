@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Optional;
 
 
 // Marks this class as a Spring MVC controller handling requests for '/api/v1/auth' path
@@ -68,7 +69,7 @@ public class AuthenticationController {
             authenticationService.signIn(signinRequest, request, response);
             // On success, redirect to the user dashboard
             User user = userRepository.findByUsername(signinRequest.getUsername()).get();
-            userService.streakLogic(user);
+            userService.streakLogic(Optional.of(user));
             return "redirect:/dashboard";
         } catch (AuthenticationException e) {
             // On failure, add an error message and redirect back to the login page

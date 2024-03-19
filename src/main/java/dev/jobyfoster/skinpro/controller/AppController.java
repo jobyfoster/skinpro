@@ -8,6 +8,7 @@ import dev.jobyfoster.skinpro.model.User;
 import dev.jobyfoster.skinpro.repository.UserRepository;
 import dev.jobyfoster.skinpro.service.OpenAIService;
 import dev.jobyfoster.skinpro.service.SkincareService;
+import dev.jobyfoster.skinpro.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,15 @@ public class AppController {
     private final SkincareService skincareService;
     private final UserRepository userRepository;
     private final OpenAIService openAIService;
+    private final UserService userService;
 
     // Autowired constructor for dependency injection, ensuring that Spring manages the lifecycle of the dependencies.
     @Autowired
-    public AppController(SkincareService skincareService, UserRepository userRepository, OpenAIService openAIService) {
+    public AppController(SkincareService skincareService, UserRepository userRepository, OpenAIService openAIService, UserService userService) {
         this.skincareService = skincareService;
         this.userRepository = userRepository;
         this.openAIService = openAIService;
+        this.userService = userService;
     }
     @GetMapping(path = "/")
     public String home(HttpServletRequest request, Model model, Authentication authentication) {
@@ -84,6 +87,7 @@ public class AppController {
             // Adds the UserDetails to the model and returns the "dashboard" view if no errors occur.
             List<SkincareRoutine> dayRoutine = skincareService.getDayRoutine(userId);
             List<SkincareRoutine> nightRoutine = skincareService.getNightRoutine(userId);
+            userService.streakLogic(user);
             model.addAttribute("dayRoutine", dayRoutine);
             model.addAttribute("nightRoutine", nightRoutine);
             model.addAttribute("user", user.get());

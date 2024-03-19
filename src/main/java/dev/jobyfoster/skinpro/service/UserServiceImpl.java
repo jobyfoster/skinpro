@@ -1,15 +1,14 @@
 package dev.jobyfoster.skinpro.service;
 
 
-import dev.jobyfoster.skinpro.config.PasswordConfig;
-import dev.jobyfoster.skinpro.dto.SigninRequest;
 import dev.jobyfoster.skinpro.model.User;
 import dev.jobyfoster.skinpro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 
 // Marks this class as a service component in the Spring context,
@@ -62,26 +61,38 @@ public class UserServiceImpl implements UserService {
     /**
      * Currently, it awards 50 points by checking if the user has a 7 day streak
      *
-     * @param userId the ID of the user to check for a streak and potentially award points to
+     * @param user the user to check for a streak and potentially award points to
      */
-    public void checkAndAwardStreakBonus(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("User not found"));
-        if (user.getStreak() == 7){
-            addPoints(userId, 50);
-            user.setStreak(0);
+    public void checkAndAwardStreakBonus(User user) {
+        if (user.getStreak() == 7) {
+            addPoints(user.getId(), 50);
+            user.setStreak(0); // Reset streak after awarding bonus
+            // Consider saving the user here if necessary
         }
     }
 
-    public void streakLogic(User user){
-        LocalDate date = LocalDate.now();
-        if (date.getDayOfMonth() - user.getLastLogin().getDayOfMonth() == 1){
-            user.setLastLogin(LocalDate.now());
-            user.setStreak(user.getStreak()+1);
-            this.awardDailyLoginPoints(user.getId());
-            this.checkAndAwardStreakBonus(user.getId());
-        } else if (date.getDayOfMonth() - user.getLastLogin().getDayOfMonth() > 1) {
-            user.setStreak(0);
-            this.awardDailyLoginPoints(user.getId());
-        }
+    public void streakLogic(Optional<User> userOptional) {
+        userOptional.ifPresent(user -> {
+            LocalDate today = LocalDate.now();
+            LocalDate lastLogin = user.getLastLogin();
+            long daysBetween = ChronoUnit.DAYS.between(lastLogin, today);
+
+            if (daysBetween == 1) {
+                // User logged in consecutively
+                user.setStreak(user.getStreak() + 1);
+                user.setLastLogin(today);
+                checkAndAwardStreakBonus(user); // Pass user directly to avoid redundant lookup
+            } else if (daysBetween > 1) {
+                // Reset streak if not consecutive days
+                user.setLastLogin(today);
+                user.setStreak(0);
+            }
+
+
+            awardDailyLoginPoints(user.getId());
+
+            // Assuming save/update method exists
+            userRepository.save(user);
+        });
     }
 }
