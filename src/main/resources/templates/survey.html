@@ -2,77 +2,89 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skincare Survey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" />
 </head>
 <body>
-<h1>Skincare Survey</h1>
-<form action="#" th:action="@{/survey}" th:object="${surveyResponse}" method="post">
-    <!-- Skin Type -->
-    <div>
-        <label>How would you describe your skin type?</label><br>
-        <input type="radio" id="oily" name="skinType" value="Oily" th:field="*{skinType}">
-        <label for="oily">Oily</label><br>
-        <input type="radio" id="dry" name="skinType" value="Dry" th:field="*{skinType}">
-        <label for="dry">Dry</label><br>
-        <input type="radio" id="combination" name="skinType" value="Combination" th:field="*{skinType}">
-        <label for="combination">Combination</label><br>
-        <input type="radio" id="normal" name="skinType" value="Normal" th:field="*{skinType}">
-        <label for="normal">Normal</label><br>
-        <input type="radio" id="sensitive" name="skinType" value="Sensitive" th:field="*{skinType}">
-        <label for="sensitive">Sensitive</label>
-    </div>
+<div class="mx-auto py-12">
+    <nav class="navbar">
+        <div class="navbar-content">
+            <h1 class="text-4xl font-bold">SkinPro</h1>
+            <a href="logout" class="text-white ml-4 navbar-link" id="logout">Logout</a>
+        </div>
+    </nav>
 
-    <!-- Main Skin Concern -->
-    <div>
-        <label>What is your main skin concern?</label><br>
-        <select name="mainSkinConcern" th:field="*{mainSkinConcern}">
-            <option value="Acne and breakouts">Acne and breakouts</option>
-            <option value="Fine lines and wrinkles">Fine lines and wrinkles</option>
-            <option value="Dullness and uneven skin tone">Dullness and uneven skin tone</option>
-            <option value="Dryness and dehydration">Dryness and dehydration</option>
-            <option value="Hyperpigmentation and dark spots">Hyperpigmentation and dark spots</option>
-            <option value="Sensitivity and redness">Sensitivity and redness</option>
-        </select>
-    </div>
+    <div class="max-w-4xl mx-auto mt-8 flex justify-between">
+        <form action="#" th:action="@{/survey}" th:object="${surveyResponse}" method="post" class="w-full">
+            <div class="navcolor text-white p-6 rounded">
+                <h2 class="text-2xl font-bold mb-4 text-center">Skincare Survey</h2>
 
-    <!-- Reaction to New Products -->
-    <div>
-        <label>How does your skin react to new skincare products?</label><br>
-        <input type="radio" id="positively" name="reactionToNewProducts" value="Positively" th:field="*{reactionToNewProducts}">
-        <label for="positively">Positively, with few or no adverse reactions.</label><br>
-        <input type="radio" id="negatively" name="reactionToNewProducts" value="Negatively" th:field="*{reactionToNewProducts}">
-        <label for="negatively">Negatively, with irritation, redness, or breakouts.</label><br>
-        <input type="radio" id="varies" name="reactionToNewProducts" value="It varies" th:field="*{reactionToNewProducts}">
-        <label for="varies">It varies; some products are fine, while others cause reactions.</label><br>
-        <input type="radio" id="noPattern" name="reactionToNewProducts" value="I haven't noticed a pattern" th:field="*{reactionToNewProducts}">
-        <label for="noPattern">I haven't noticed a pattern in how my skin reacts.</label>
-    </div>
+                <div class="mb-8">
+                    <label class="text-xl font-bold">How would you describe your skin type?</label><br>
+                    <input type="radio" id="oily" name="skinType" value="Oily" th:field="*{skinType}" class="mr-2">
+                    <label for="oily">Oily</label><br>
+                    <input type="radio" id="dry" name="skinType" value="Dry" th:field="*{skinType}" class="mr-2">
+                    <label for="dry">Dry</label><br>
+                    <input type="radio" id="combination" name="skinType" value="Combination" th:field="*{skinType}" class="mr-2">
+                    <label for="combination">Combination</label><br>
+                    <input type="radio" id="normal" name="skinType" value="Normal" th:field="*{skinType}" class="mr-2">
+                    <label for="normal">Normal</label><br>
+                    <input type="radio" id="sensitive" name="skinType" value="Sensitive" th:field="*{skinType}" class="mr-2">
+                    <label for="sensitive">Sensitive</label>
+                </div>
 
-    <!-- Age Range -->
-    <div>
-        <label>What is your age range?</label><br>
-        <select name="ageRange" th:field="*{ageRange}">
-            <option value="Under 18">Under 18</option>
-            <option value="18-24">18-24</option>
-            <option value="25-34">25-34</option>
-            <option value="35-44">35-44</option>
-            <option value="45-54">45-54</option>
-            <option value="55+">55+</option>
-        </select>
-    </div>
+                <div class="mb-8">
+                    <label class="text-xl font-bold">What is your main skin concern?</label><br>
+                    <select name="mainSkinConcern" th:field="*{mainSkinConcern}" class="w-full text-black mb-2">
+                        <option value="Acne and breakouts">Acne and breakouts</option>
+                        <option value="Fine lines and wrinkles">Fine lines and wrinkles</option>
+                        <option value="Dullness and uneven skin tone">Dullness and uneven skin tone</option>
+                        <option value="Dryness and dehydration">Dryness and dehydration</option>
+                        <option value="Hyperpigmentation and dark spots">Hyperpigmentation and dark spots</option>
+                        <option value="Sensitivity and redness">Sensitivity and redness</option>
+                    </select>
+                </div>
 
-    <!-- Sun Exposure -->
-    <div>
-        <label>How often are you exposed to the sun without protection (e.g., sunscreen)?</label><br>
-        <select name="sunExposure" th:field="*{sunExposure}">
-            <option value="Rarely or never">Rarely or never</option>
-            <option value="Sometimes">Sometimes</option>
-            <option value="Often">Often</option>
-            <option value="Always">Always</option>
-        </select>
-    </div>
+                <div class="mb-8">
+                    <label class="text-xl font-bold">How does your skin react to new skincare products?</label><br>
+                    <input type="radio" id="positively" name="reactionToNewProducts" value="Positively" th:field="*{reactionToNewProducts}" class="mr-2">
+                    <label for="positively">Positively, with few or no adverse reactions.</label><br>
+                    <input type="radio" id="negatively" name="reactionToNewProducts" value="Negatively" th:field="*{reactionToNewProducts}" class="mr-2">
+                    <label for="negatively">Negatively, with irritation, redness, or breakouts.</label><br>
+                    <input type="radio" id="varies" name="reactionToNewProducts" value="It varies" th:field="*{reactionToNewProducts}" class="mr-2">
+                    <label for="varies">It varies; some products are fine, while others cause reactions.</label><br>
+                    <input type="radio" id="noPattern" name="reactionToNewProducts" value="I haven't noticed a pattern" th:field="*{reactionToNewProducts}" class="mr-2">
+                    <label for="noPattern">I haven't noticed a pattern in how my skin reacts.</label>
+                </div>
 
-    <button type="submit">Submit</button>
-</form>
+                <div class="mb-8">
+                    <label class="text-xl font-bold">What is your age range?</label><br>
+                    <select name="ageRange" th:field="*{ageRange}" class="w-full text-black mb-2">
+                        <option value="Under 18">Under 18</option>
+                        <option value="18-24">18-24</option>
+                        <option value="25-34">25-34</option>
+                        <option value="35-44">35-44</option>
+                        <option value="45-54">45-54</option>
+                        <option value="55+">55+</option>
+                    </select>
+                </div>
+
+                <div class="mb-8">
+                    <label class="text-xl font-bold">How often are you exposed to the sun without protection (e.g., sunscreen)?</label><br>
+                    <select name="sunExposure" th:field="*{sunExposure}" class="w-full text-black mb-2" >
+                        <option value="Rarely or never">Rarely or never</option>
+                        <option value="Sometimes">Sometimes</option>
+                        <option value="Often">Often</option>
+                        <option value="Always">Always</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>
