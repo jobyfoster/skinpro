@@ -4,22 +4,24 @@ import com.azure.ai.openai.OpenAIClient;
 import com.azure.ai.openai.OpenAIClientBuilder;
 import com.azure.ai.openai.models.*;
 import com.azure.core.credential.KeyCredential;
+import com.azure.core.http.netty.NettyAsyncHttpClientBuilder;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.List;
 
 @Service
 public class OpenAIServiceImpl implements OpenAIService {
 
     private final OpenAIClient client;
-
     public OpenAIServiceImpl() {
         Dotenv dotenv = Dotenv.load(); // Load the .env file
         String apiKey = dotenv.get("OPENAI_API_KEY"); // Access the OPENAI_API_KEY variable
         this.client = new OpenAIClientBuilder()
                 .credential(new KeyCredential(apiKey))
+                .httpClient(new NettyAsyncHttpClientBuilder().responseTimeout(Duration.ofMinutes(2)).build())
                 .buildClient();
     }
 
@@ -39,7 +41,6 @@ Aim for concise, practical advice with real product examples.
 
             ChatCompletionsOptions chatCompletionsOptions = new ChatCompletionsOptions(chatMessages);
             chatCompletionsOptions.setResponseFormat(new ChatCompletionsJsonResponseFormat());
-
             ChatCompletions chatCompletions = client.getChatCompletions("gpt-4-0125-preview", chatCompletionsOptions);
 
             return chatCompletions.getChoices().stream()
