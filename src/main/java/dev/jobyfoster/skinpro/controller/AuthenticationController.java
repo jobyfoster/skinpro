@@ -21,7 +21,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AuthenticationController {
     // Dependency injection of AuthenticationService to handle the business logic of authentication
     private final AuthenticationService authenticationService;
-
     /**
      * Handles the signup process.
      *

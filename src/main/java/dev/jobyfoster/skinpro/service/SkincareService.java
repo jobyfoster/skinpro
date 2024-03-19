@@ -16,4 +16,6 @@ public interface SkincareService {
     Optional<SurveyResponse> getSurveyResponseByUserId(Long userId);
     void saveRoutine(String routineJson, Long userId) throws JsonProcessingException;
 
+    List<SkincareRoutine> getDayRoutine(Long userId);
+    List<SkincareRoutine> getNightRoutine(Long userId);
 }
