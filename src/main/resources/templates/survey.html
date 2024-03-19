@@ -9,6 +9,66 @@
 </head>
 <body>
 <div class="mx-auto py-12">
+
+    <div id="loadingScreen" class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-75 flex justify-center items-center hidden">
+        <div class="flex flex-col items-center text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: none; display: block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                <defs>
+                    <filter id="ldio-sdni941feuc-filter" x="-100%" y="-100%" width="300%" height="300%" color-interpolation-filters="sRGB">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="2.4000000000000004"></feGaussianBlur>
+                        <feComponentTransfer result="cutoff">
+                            <feFuncA type="table" tableValues="0 0 0 0 0 0 1 1 1 1 1"></feFuncA>
+                        </feComponentTransfer>
+                    </filter>
+                </defs>
+                <g filter="url(#ldio-sdni941feuc-filter)">
+                    <g transform="translate(50 50)">
+                        <g>
+                            <circle cx="17" cy="0" r="5" fill="#1d4ed8">
+                                <animate attributeName="r" keyTimes="0;0.5;1" values="3.5999999999999996;8.399999999999999;3.5999999999999996" dur="4s" repeatCount="indefinite" begin="-0.25s"></animate>
+                            </circle>
+                            <animateTransform attributeName="transform" type="rotate" keyTimes="0;1" values="0;360" dur="4s" repeatCount="indefinite" begin="0s"></animateTransform>
+                        </g>
+                    </g>
+                    <g transform="translate(50 50)">
+                        <g>
+                            <circle cx="17" cy="0" r="5" fill="#3b82f6">
+                                <animate attributeName="r" keyTimes="0;0.5;1" values="3.5999999999999996;8.399999999999999;3.5999999999999996" dur="2s" repeatCount="indefinite" begin="-0.2s"></animate>
+                            </circle>
+                            <animateTransform attributeName="transform" type="rotate" keyTimes="0;1" values="0;360" dur="2s" repeatCount="indefinite" begin="-0.05s"></animateTransform>
+                        </g>
+                    </g>
+                    <g transform="translate(50 50)">
+                        <g>
+                            <circle cx="17" cy="0" r="5" fill="#7e22ce">
+                                <animate attributeName="r" keyTimes="0;0.5;1" values="3.5999999999999996;8.399999999999999;3.5999999999999996" dur="1.3333333333333333s" repeatCount="indefinite" begin="-0.15s"></animate>
+                            </circle>
+                            <animateTransform attributeName="transform" type="rotate" keyTimes="0;1" values="0;360" dur="1.3333333333333333s" repeatCount="indefinite" begin="-0.1s"></animateTransform>
+                        </g>
+                    </g>
+                    <g transform="translate(50 50)">
+                        <g>
+                            <circle cx="17" cy="0" r="5" fill="#a855f7">
+                                <animate attributeName="r" keyTimes="0;0.5;1" values="3.5999999999999996;8.399999999999999;3.5999999999999996" dur="1s" repeatCount="indefinite" begin="-0.1s"></animate>
+                            </circle>
+                            <animateTransform attributeName="transform" type="rotate" keyTimes="0;1" values="0;360" dur="1s" repeatCount="indefinite" begin="-0.15s"></animateTransform>
+                        </g>
+                    </g>
+                    <g transform="translate(50 50)">
+                        <g>
+                            <circle cx="17" cy="0" r="5" fill="#1d4ed8">
+                                <animate attributeName="r" keyTimes="0;0.5;1" values="3.5999999999999996;8.399999999999999;3.5999999999999996" dur="0.8s" repeatCount="indefinite" begin="-0.05s"></animate>
+                            </circle>
+                            <animateTransform attributeName="transform" type="rotate" keyTimes="0;1" values="0;360" dur="0.8s" repeatCount="indefinite" begin="-0.2s"></animateTransform>
+                        </g>
+                    </g>
+                </g>
+            </svg>
+            <div class="mt-4 text-4xl">Preparing your curated skincare routine...</div>
+        </div>
+    </div>
+
+
     <nav class="navbar">
         <div class="navbar-content">
             <h1 class="text-4xl font-bold">SkinPro</h1>
@@ -84,6 +144,11 @@
                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">Submit</button>
             </div>
         </form>
+
+        <script>
+            document.querySelector('form').addEventListener('submit', function (event) {
+                document.getElementById('loadingScreen').style.visibility = 'visible';
+        });</script>
     </div>
 </div>
 </body>
