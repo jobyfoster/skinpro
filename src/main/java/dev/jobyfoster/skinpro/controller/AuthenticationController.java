@@ -2,7 +2,11 @@ package dev.jobyfoster.skinpro.controller;
 
 import dev.jobyfoster.skinpro.dto.SigninRequest;
 import dev.jobyfoster.skinpro.dto.SignupRequest;
+import dev.jobyfoster.skinpro.model.User;
+import dev.jobyfoster.skinpro.repository.UserRepository;
 import dev.jobyfoster.skinpro.service.AuthenticationService;
+import dev.jobyfoster.skinpro.service.UserService;
+import dev.jobyfoster.skinpro.service.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 
 // Marks this class as a Spring MVC controller handling requests for '/api/v1/auth' path
 @Controller
@@ -21,7 +28,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AuthenticationController {
     // Dependency injection of AuthenticationService to handle the business logic of authentication
     private final AuthenticationService authenticationService;
-
+    private final UserRepository userRepository;
+    private final UserService userService;
     /**
      * Handles the signup process.
      *
@@ -59,6 +67,8 @@ public class AuthenticationController {
             // Attempt to sign in the user with the provided credentials
             authenticationService.signIn(signinRequest, request, response);
             // On success, redirect to the user dashboard
+            User user = userRepository.findByUsername(signinRequest.getUsername()).get();
+            userService.streakLogic(user);
             return "redirect:/dashboard";
         } catch (AuthenticationException e) {
             // On failure, add an error message and redirect back to the login page

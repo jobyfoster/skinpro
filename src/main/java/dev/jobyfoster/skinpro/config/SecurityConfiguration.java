@@ -50,7 +50,7 @@ public class SecurityConfiguration {
                 // Configures authorization rules for various endpoints
                 .authorizeHttpRequests(authorize -> authorize
                         // Allows public access to specified endpoints
-                        .requestMatchers("/api/v1/auth/**", "/signup", "/login", "/").permitAll()
+                        .requestMatchers("/api/v1/auth/**", "/signup", "/login", "/", "/styles.css").permitAll()
                         // Restricts access to admin endpoints to users with ROLE_ADMIN authority
                         .requestMatchers("/api/v1/admin/**").hasAuthority("ROLE_ADMIN")
                         // Restricts access to user endpoints to users with ROLE_USER authority

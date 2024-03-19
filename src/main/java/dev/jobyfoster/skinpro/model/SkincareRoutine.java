@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,10 @@ public class SkincareRoutine {
     @Column(nullable = false)
     private String routineType;
 
+    @Temporal(TemporalType.DATE)
+    private LocalDate lastCompleted;
+
     @OneToMany(mappedBy = "skincareRoutine", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RoutineStep> steps = new ArrayList<>();
+
 }

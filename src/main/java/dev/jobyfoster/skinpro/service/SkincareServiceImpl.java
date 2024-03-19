@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.TemporalAmount;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,6 +49,17 @@ public class SkincareServiceImpl implements SkincareService {
         saveRoutineDetails(routineDTO.getNight(), userId, "night");
     }
 
+    @Override
+    public List<SkincareRoutine> getDayRoutine(Long userId) {
+        return skincareRoutineRepository.findByUserIdAndRoutineType(userId, "day");
+    }
+
+    @Override
+    public List<SkincareRoutine> getNightRoutine(Long userId) {
+        // Assuming 'night' is the identifier for night routines
+        return skincareRoutineRepository.findByUserIdAndRoutineType(userId, "night");
+    }
+
     private void saveRoutineDetails(RoutineDetailDTO routineDetailDTO, Long userId, String routineType) {
         SkincareRoutine skincareRoutine = new SkincareRoutine();
         skincareRoutine.setUserId(userId);
@@ -63,6 +77,9 @@ public class SkincareServiceImpl implements SkincareService {
         }).collect(Collectors.toList());
 
         skincareRoutine.setSteps(steps);
+        LocalDate date = LocalDate.now().minus(Period.ofDays(2));
+        skincareRoutine.setLastCompleted(date);
+
         skincareRoutineRepository.save(skincareRoutine);
     }
 

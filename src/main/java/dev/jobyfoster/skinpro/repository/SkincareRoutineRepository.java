@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface SkincareRoutineRepository extends JpaRepository<SkincareRoutine, Long> {
     List<SkincareRoutine> findByUserId(Long userId);
+    List<SkincareRoutine> findByUserIdAndRoutineType(Long userId, String routineType);
 }

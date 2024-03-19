@@ -2,9 +2,14 @@ package dev.jobyfoster.skinpro.service;
 
 
 import dev.jobyfoster.skinpro.config.PasswordConfig;
+import dev.jobyfoster.skinpro.dto.SigninRequest;
+import dev.jobyfoster.skinpro.model.User;
 import dev.jobyfoster.skinpro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 
 // Marks this class as a service component in the Spring context,
@@ -13,7 +18,6 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     // Dependency on UserRepository for database operations.
     private final UserRepository userRepository;
-
     // Autowired constructor for dependency injection of UserRepository,
     // ensuring an instance of UserRepository is supplied by Spring at runtime.
     @Autowired
@@ -35,6 +39,10 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
         });
     }
+
+
+
+
 
     /**
      * Awards 5 points to a user for their daily login activity.
@@ -61,9 +69,24 @@ public class UserServiceImpl implements UserService {
      * @param userId the ID of the user to check for a streak and potentially award points to
      */
     public void checkAndAwardStreakBonus(Long userId) {
-        // This method requires implementation of logic to check for a 7-day streak.
-        // If the user has logged in or completed routines for 7 consecutive days, award them 50 bonus points.
-        addPoints(userId, 50); // Example, implement checking logic
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("User not found"));
+        if (user.getStreak() == 7){
+            addPoints(userId, 50);
+            user.setStreak(0);
+        }
+         // Example, implement checking logic
     }
 
+    public void streakLogic(User user){
+        LocalDate date = LocalDate.now();
+        if (date.getDayOfMonth() - user.getLastLogin().getDayOfMonth() == 1){
+            user.setLastLogin(LocalDate.now());
+            user.setStreak(user.getStreak()+1);
+            this.awardDailyLoginPoints(user.getId());
+            this.checkAndAwardStreakBonus(user.getId());
+        } else if (date.getDayOfMonth() - user.getLastLogin().getDayOfMonth() > 1) {
+            user.setStreak(0);
+            this.awardDailyLoginPoints(user.getId());
+        }
+    }
 }
