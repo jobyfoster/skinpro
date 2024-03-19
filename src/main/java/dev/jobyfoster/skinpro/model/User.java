@@ -36,6 +36,7 @@ public class User implements UserDetails {
 
     // Simple integer fields to store user points and streak.
     private int points;
+
     private int streak;
 
     // Stores the last login date.

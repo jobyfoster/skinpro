@@ -30,4 +30,5 @@ public class SkincareRoutine {
 
     @OneToMany(mappedBy = "skincareRoutine", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RoutineStep> steps = new ArrayList<>();
+
 }
