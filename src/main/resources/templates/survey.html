@@ -83,15 +83,15 @@
 
                 <div class="mb-8">
                     <label class="text-xl font-bold">How would you describe your skin type?</label><br>
-                    <input type="radio" id="oily" name="skinType" value="Oily" th:field="*{skinType}" class="mr-2">
+                    <input type="radio" id="oily" name="skinType" value="Oily" th:field="*{skinType}" class="mr-2" required>
                     <label for="oily">Oily</label><br>
-                    <input type="radio" id="dry" name="skinType" value="Dry" th:field="*{skinType}" class="mr-2">
+                    <input type="radio" id="dry" name="skinType" value="Dry" th:field="*{skinType}" class="mr-2" required>
                     <label for="dry">Dry</label><br>
-                    <input type="radio" id="combination" name="skinType" value="Combination" th:field="*{skinType}" class="mr-2">
+                    <input type="radio" id="combination" name="skinType" value="Combination" th:field="*{skinType}" class="mr-2" required>
                     <label for="combination">Combination</label><br>
-                    <input type="radio" id="normal" name="skinType" value="Normal" th:field="*{skinType}" class="mr-2">
+                    <input type="radio" id="normal" name="skinType" value="Normal" th:field="*{skinType}" class="mr-2" required>
                     <label for="normal">Normal</label><br>
-                    <input type="radio" id="sensitive" name="skinType" value="Sensitive" th:field="*{skinType}" class="mr-2">
+                    <input type="radio" id="sensitive" name="skinType" value="Sensitive" th:field="*{skinType}" class="mr-2" required>
                     <label for="sensitive">Sensitive</label>
                 </div>
 
@@ -109,13 +109,13 @@
 
                 <div class="mb-8">
                     <label class="text-xl font-bold">How does your skin react to new skincare products?</label><br>
-                    <input type="radio" id="positively" name="reactionToNewProducts" value="Positively" th:field="*{reactionToNewProducts}" class="mr-2">
+                    <input type="radio" id="positively" name="reactionToNewProducts" value="Positively" th:field="*{reactionToNewProducts}" class="mr-2" required>
                     <label for="positively">Positively, with few or no adverse reactions.</label><br>
-                    <input type="radio" id="negatively" name="reactionToNewProducts" value="Negatively" th:field="*{reactionToNewProducts}" class="mr-2">
+                    <input type="radio" id="negatively" name="reactionToNewProducts" value="Negatively" th:field="*{reactionToNewProducts}" class="mr-2" required>
                     <label for="negatively">Negatively, with irritation, redness, or breakouts.</label><br>
-                    <input type="radio" id="varies" name="reactionToNewProducts" value="It varies" th:field="*{reactionToNewProducts}" class="mr-2">
+                    <input type="radio" id="varies" name="reactionToNewProducts" value="It varies" th:field="*{reactionToNewProducts}" class="mr-2" required>
                     <label for="varies">It varies; some products are fine, while others cause reactions.</label><br>
-                    <input type="radio" id="noPattern" name="reactionToNewProducts" value="I haven't noticed a pattern" th:field="*{reactionToNewProducts}" class="mr-2">
+                    <input type="radio" id="noPattern" name="reactionToNewProducts" value="I haven't noticed a pattern" th:field="*{reactionToNewProducts}" class="mr-2" required>
                     <label for="noPattern">I haven't noticed a pattern in how my skin reacts.</label>
                 </div>
 
