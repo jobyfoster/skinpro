@@ -1,40 +1,30 @@
 body {
-    background-color: #171923;
     color: #ffffff;
     margin: 0;
     padding: 0;
 }
-a {
-    color: #90cdf4;
-}
-a:hover {
-    color: #63b3ed;
-}
-.navbar {
-    background-color: #1a202c;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-    padding: 1rem;
-}
-.navbar-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.navbar-links {
-    display: flex;
-}
+
 .navbar-link {
-    margin-right: 1rem;
+    display: inline-flex;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
 }
 .navbar-link:hover {
     color: #90cdf4;
 }
 
-.navcolor {
+.navbar {
     background-color: #1a202c;
+}
+
+#points {
+    background-color: #171923;
+    border: 2px #a0aec0 solid;
+    padding: 8px 24px;
+    border-radius: 20px;
+    display: inline-block;
+    font-weight: bold;
 }
 
 .disabled {

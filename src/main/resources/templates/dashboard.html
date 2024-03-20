@@ -8,27 +8,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" />
 </head>
-<body>
-<div class="mx-auto py-12">
-    <nav class="navbar">
-        <div class="navbar-content">
-            <h1 class="text-4xl font-bold"><a class="skinpro" href="/">SkinPro</a></h1>
-            <div id="currentDate">
-                <p class="text-white text-xl"><span id="date"></span></p>
-            </div>
-            <div class="navbar-links">
-                <span class="text-white ml-4 points" th:text="${user.points}" id="points">Points: 0</span>
-                <span class="text-white ml-4" th:text="${user.username}"></span>
-                <a href="logout" class="text-white ml-4 navbar-link" id="logout">Logout</a>
-            </div>
-        </div>
-    </nav>
+<body class="bg-slate-800 flex flex-col min-h-screen">
 
-    <div class="max-w-4xl mx-auto mt-8">
+    <header class="text-white navbar">
+        <nav class="container mx-auto flex justify-between items-center py-4">
+            <a href="/" class="text-3xl font-bold">SkinPro</a>
+            <div class="flex items-center justify-end text-white">
+                <div id="currentDate" class="mr-4">
+                    <p class="text-lg lg:text-xl"><span id="date"></span></p>
+                </div>
+                <!-- Displaying user points -->
+                <span class="text-sm lg:text-md mr-4 points" th:text="${user.points}" id="points">Points: 0</span>
+                <!-- Logout link -->
+                <a href="logout" class="px-4 py-2 text-sm lg:text-md bg-gray-600 hover:bg-gray-700 text-white rounded transition duration-200 ease-in-out" id="logout">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="max-w-4xl mx-auto mt-8 flex-grow">
         <div class="flex flex-col lg:flex-row justify-between gap-4 mt-8">
             <!-- Morning Routine -->
-            <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white p-6 rounded-lg shadow-lg w-full lg:w-1/2">
-                <h2 class="text-3xl font-extrabold mb-4 text-center">Morning Routine <i class="fas fa-sun"></i></h2>
+            <div class="bg-gradient-to-r from-blue-600 to-blue-900 text-gray-200 p-6 rounded-xl shadow-2xl w-full lg:w-1/2">
+                <h2 class="text-3xl font-bold mb-4 text-center">Morning Routine <i class="fas fa-sun"></i></h2>
                 <ul class="list-none m-0 p-0 space-y-4">
                     <th:block th:each="routine : ${dayRoutine}">
                         <li th:each="step : ${routine.steps}" class="flex items-start space-x-2">
@@ -41,26 +43,21 @@
                         </li>
                     </th:block>
                 </ul>
-
-                <!-- Button shown when the routine is completed today (disabled appearance) -->
-                <!-- Morning Routine Complete Button -->
                 <a th:if="${!isDayRoutineCompletedToday}"
                    href="api/v1/user/completed/day"
-                   class="block mt-4 bg-green-500 text-white hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full text-center transition duration-300 ease-in-out transform hover:scale-105">
+                   class="block mt-4 bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded w-full text-center transition duration-300 ease-in-out transform hover:-translate-y-1">
                     Mark Complete
                 </a>
-
                 <div th:if="${isDayRoutineCompletedToday}"
                      id="morning-complete"
-                     class="mt-4 bg-gray-400 text-white font-bold py-2 px-4 rounded w-full text-center">
+                     class="mt-4 bg-gray-600/75 text-white font-bold py-2 px-4 rounded w-full text-center">
                     Completed
                 </div>
-
             </div>
 
             <!-- Night Routine -->
-            <div class="bg-gradient-to-r from-purple-500 to-purple-700 text-white p-6 rounded-lg shadow-lg w-full lg:w-1/2">
-                <h2 class="text-3xl font-extrabold mb-4 text-center">Night Routine <i class="fas fa-moon"></i></h2>
+            <div class="bg-gradient-to-r from-purple-600 to-purple-900 text-gray-200 p-6 rounded-xl shadow-2xl w-full lg:w-1/2">
+                <h2 class="text-3xl font-bold mb-4 text-center">Night Routine <i class="fas fa-moon"></i></h2>
                 <ul class="list-none m-0 p-0 space-y-4">
                     <th:block th:each="routine : ${nightRoutine}">
                         <li th:each="step : ${routine.steps}" class="flex items-start space-x-2">
@@ -73,25 +70,32 @@
                         </li>
                     </th:block>
                 </ul>
-                <!-- Button shown when the night routine is completed today (disabled appearance) -->
                 <a th:if="${!isNightRoutineCompletedToday}"
                    href="api/v1/user/completed/night"
-                   class="block mt-4 bg-green-500 text-white hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full text-center transition duration-300 ease-in-out transform hover:scale-105">
+                   class="block mt-4 bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded w-full text-center transition duration-300 ease-in-out transform hover:-translate-y-1">
                     Mark Complete
                 </a>
-
                 <div th:if="${isNightRoutineCompletedToday}"
                      id="night-complete"
-                     class="mt-4 bg-gray-400 text-white font-bold py-2 px-4 rounded w-full text-center">
+                     class="mt-4 bg-gray-600/75 text-white font-bold py-2 px-4 rounded w-full text-center">
                     Completed
                 </div>
-
             </div>
         </div>
     </div>
 
-</div>
-
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto text-center">
+            <p>© 2024 SkinPro. All rights reserved.</p>
+            <div class="text-sm mt-4">
+                Developed by:
+                <a href="https://github.com/jobyfoster" class="hover:text-gray-400" target="_blank">Joby Foster</a>,
+                <a href="https://github.com/ocotten24" class="hover:text-gray-400" target="_blank">Owen Cotten</a>, and
+                <a href="https://github.com/Josh-Ra" class="hover:text-gray-400" target="_blank">Joshua Wadley</a>.
+            </div>
+        </div>
+    </footer>
 <script>
 
     let currentDate = new Date();

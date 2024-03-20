@@ -41,7 +41,7 @@ Aim for concise, practical advice with real product examples.
 
             ChatCompletionsOptions chatCompletionsOptions = new ChatCompletionsOptions(chatMessages);
             chatCompletionsOptions.setResponseFormat(new ChatCompletionsJsonResponseFormat());
-            ChatCompletions chatCompletions = client.getChatCompletions("gpt-4-0125-preview", chatCompletionsOptions);
+            ChatCompletions chatCompletions = client.getChatCompletions("gpt-3.5-turbo-0125", chatCompletionsOptions);
 
             return chatCompletions.getChoices().stream()
                     .map(choice -> choice.getMessage().getContent())

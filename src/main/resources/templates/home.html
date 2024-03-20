@@ -1,50 +1,102 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkinPro</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" />
 </head>
-<body>
-    <div class="mx-auto py-12">
-        <nav class="navbar">
-            <div class="navbar-content">
-                <h1 class="text-4xl font-bold"><a class="skinpro" href="/">SkinPro</a></h1>
-                <div class="navbar-links">
-                    <th:block th:if="${isLoggedIn}">
-                        <a href="dashboard" class="navbar-link">Dashboard</a>
-                        <a href="logout" class="navbar-link">Logout</a>
-                    </th:block>
-                    <th:block th:unless="${isLoggedIn}">
-                        <a href="login" class="navbar-link">Login</a>
-                        <a href="signup" class="navbar-link">Register</a>
-                    </th:block>
-                </div>
+<body class="bg-slate-800">
+    <header class="text-white navbar">
+        <nav class="container mx-auto flex justify-between items-center py-4">
+            <a href="/" class="text-3xl font-bold">SkinPro</a>
+            <div class="flex items-center">
+                <th:block th:if="${isLoggedIn}">
+                    <a href="dashboard" class="navbar-link">Dashboard</a>
+                    <a href="logout" class="px-4 py-2 text-sm lg:text-md bg-gray-600 hover:bg-gray-700 text-white rounded transition duration-200 ease-in-out" id="logout">Logout</a>
+                </th:block>
+                <th:block th:unless="${isLoggedIn}">
+                    <a href="login" class="navbar-link">Login</a>
+                    <a href="signup" class="navbar-link">Register</a>
+                </th:block>
             </div>
         </nav>
-        
-        <div class="max-w-2xl mx-auto">
-            <div class="text-center mb-8">
-                <p class="text-gray-400 pt-12">Your ultimate destination for personalized skincare solutions.</p>
-            </div>
-            <div class="mt-12">
-                <h2 class="text-2xl font-bold mb-4">Have you ever had issues with acne?</h2>
-                <p class="mb-4">SkinPro is the solution. Our personalized skincare recommendations can help you achieve clear, healthy skin.</p>
-            </div>
-            <div>
-                <h2 class="text-2xl font-bold mb-4">About SkinPro</h2>
-                <p class="mb-4">SkinPro is a revolutionary platform that offers personalized skincare solutions tailored to your unique skin type and concerns. Our mission is to empower individuals to achieve healthy, glowing skin through curated products and customized skincare routines.</p>
-                <h3 class="text-xl font-bold mb-2">Why Choose SkinPro?</h3>
-                <ul class="list-disc ml-8">
-                    <li>Personalized skincare recommendations based on your skin type and concerns.</li>
-                    <li>Curated selection of high-quality skincare products.</li>
-                    <li>Customized skincare routines designed for your skin's needs.</li>
-                    <li>Convenient online platform for all your skincare needs.</li>
-                </ul>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="text-center py-40 bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
+        <div class="container mx-auto px-6">
+            <h1 class="text-6xl font-bold mb-6">Discover Your Personalized Skincare Routine</h1>
+            <p class="text-xl mb-16">Complete our survey and get AI-generated skincare routines tailored just for you.</p>
+            <a href="signup" class="bg-purple-500 hover:bg-purple-600 text-white font-bold px-8 py-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105">Get Started</a>
+        </div>
+    </section>
+
+
+    <!-- Features Section -->
+    <section class="py-32 bg-gray-800 text-gray-300">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="text-center">
+                    <i class="fas fa-user-md fa-4x mb-4 text-purple-400"></i>
+                    <h2 class="text-3xl font-bold mb-3">Personalized Advice</h2>
+                    <p>Expert skincare advice tailored to your unique skin needs.</p>
+                </div>
+                <div class="text-center">
+                    <i class="fas fa-gifts fa-4x mb-4 text-green-400"></i>
+                    <h2 class="text-3xl font-bold mb-3">Rewards System</h2>
+                    <p>Earn points and rewards by following your personalized skincare routine.</p>
+                </div>
+                <div class="text-center">
+                    <i class="fas fa-lock fa-4x mb-4 text-red-400"></i>
+                    <h2 class="text-3xl font-bold mb-3">Secure</h2>
+                    <p>Your information is protected with secure authentication and data handling.</p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+
+    <!-- Start Your Journey -->
+    <section class="py-32 bg-white text-slate-900">
+        <div class="container mx-auto text-center px-6">
+            <h2 class="text-5xl font-bold mb-24">How to Start Your Journey with SkinPro</h2>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-10">
+                <div class="text-center">
+                    <i class="fas fa-user-plus fa-5x mb-5 text-cyan-500"></i>
+                    <h3 class="text-3xl font-bold mb-3">Sign Up</h3>
+                    <p>Create your account to get started on your personalized skincare journey.</p>
+                </div>
+                <div class="text-center">
+                    <i class="fas fa-clipboard-list fa-5x mb-5 text-green-500"></i>
+                    <h3 class="text-3xl font-bold mb-3">Take the Survey</h3>
+                    <p>Complete our detailed survey to tailor the skincare routines to your needs.</p>
+                </div>
+                <div class="text-center">
+                    <i class="fas fa-trophy fa-5x mb-5 text-yellow-400"></i>
+                    <h3 class="text-3xl font-bold mb-3">Earn Points</h3>
+                    <p>Follow your routines and log in every day to earn points and rewards.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto text-center">
+            <p>© 2024 SkinPro. All rights reserved.</p>
+            <div class="text-sm mt-4">
+                Developed by:
+                <a href="https://github.com/jobyfoster" class="hover:text-gray-400" target="_blank">Joby Foster</a>,
+                <a href="https://github.com/ocotten24" class="hover:text-gray-400" target="_blank">Owen Cotten</a>, and
+                <a href="https://github.com/Josh-Ra" class="hover:text-gray-400" target="_blank">Joshua Wadley</a>.
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>

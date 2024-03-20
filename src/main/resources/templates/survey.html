@@ -7,8 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" />
 </head>
-<body>
-<div class="mx-auto py-12">
+<body class="bg-slate-800">
 
     <div id="loadingScreen" class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-75 flex justify-center items-center hidden">
         <div class="flex flex-col items-center text-white">
@@ -69,12 +68,21 @@
     </div>
 
 
-    <nav class="navbar">
-        <div class="navbar-content">
-            <h1 class="text-4xl font-bold"><a class="skinpro" href="/">SkinPro</a></h1>
-            <a href="logout" class="text-white ml-4 navbar-link" id="logout">Logout</a>
-        </div>
-    </nav>
+    <header class="text-white navbar">
+        <nav class="container mx-auto flex justify-between items-center py-4">
+            <a href="/" class="text-3xl font-bold">SkinPro</a>
+            <div class="flex items-center">
+                <th:block th:if="${isLoggedIn}">
+                    <a href="dashboard" class="navbar-link">Dashboard</a>
+                    <a href="logout" class="navbar-link">Logout</a>
+                </th:block>
+                <th:block th:unless="${isLoggedIn}">
+                    <a href="login" class="navbar-link">Login</a>
+                    <a href="signup" class="navbar-link">Register</a>
+                </th:block>
+            </div>
+        </nav>
+    </header>
 
     <div class="max-w-4xl mx-auto mt-8 flex justify-between">
         <form action="#" th:action="@{/survey}" th:object="${surveyResponse}" method="post" class="w-full">
@@ -150,6 +158,5 @@
                 document.getElementById('loadingScreen').style.visibility = 'visible';
         });</script>
     </div>
-</div>
 </body>
 </html>

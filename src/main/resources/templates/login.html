@@ -1,5 +1,5 @@
-    <!DOCTYPE html>
-    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,35 +7,53 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" />
     </head>
-    <body>
-        <nav class="navbar">
-            <div class="navbar-content">
-                <h1 class="text-4xl font-bold"><a class="skinpro" href="/">SkinPro</a></h1>
-                <a href="/signup" class="text-white">Register</a>
-            </div>
-        </nav>
-
-        <div class="mx-auto py-24">
-            <div class="max-w-md mx-auto p-8 navcolor rounded shadow-lg">
-                <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
-                <div th:if="${error}">
-                    <p th:text="${error}"></p>
+    <body class="bg-slate-800 flex flex-col min-h-screen">
+        <header class="text-white navbar">
+            <nav class="container mx-auto flex justify-between items-center py-4">
+                <a href="/" class="text-3xl font-bold">SkinPro</a>
+                <div class="flex items-center">
+                    <th:block th:if="${isLoggedIn}">
+                        <a href="dashboard" class="navbar-link">Dashboard</a>
+                        <a href="logout" class="navbar-link">Logout</a>
+                    </th:block>
+                    <th:block th:unless="${isLoggedIn}">
+                        <a href="login" class="navbar-link">Login</a>
+                        <a href="signup" class="navbar-link">Register</a>
+                    </th:block>
                 </div>
+            </nav>
+        </header>
 
-                <form th:action="@{/api/v1/auth/signin}" method="post">
-                    <div class="mb-4">
-                        <label for="username" class="block text-white">Username:</label>
-                        <input type="text" id="username" name="username" class="w-full px-3 py-2 border rounded text-gray-800" required autofocus>
+    <div class="flex-grow flex items-center justify-center bg-gray-900">
+        <div class="max-w-md w-full space-y-8 p-10 bg-gray-800 rounded-lg shadow-2xl" style="max-height: calc(100vh - 125px); overflow-y: auto;">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-gray-100">Login <i class="fas fa-sign-in-alt"></i></h2>
+                <p class="text-gray-400">Please sign in to your account</p>
+            </div>
+            <div th:if="${error}" class="bg-red-800 text-white p-3 rounded-lg shadow-md mb-6">
+                <i class="fas fa-exclamation-triangle"></i> <span th:text="${error}">Invalid credentials</span>
+            </div>
+
+            <form th:action="@{/api/v1/auth/signin}" method="post" class="mt-8 space-y-6">
+                    <div class="rounded-md shadow-sm -space-y-px">
+                        <div class="mb-4">
+                            <label for="username" class="sr-only">Username</label>
+                            <input type="text" id="username" name="username" required autofocus class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-700 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" placeholder="Username">
+                        </div>
+                        <div>
+                            <label for="password" class="sr-only">Password</label>
+                            <input type="password" id="password" name="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-700 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" placeholder="Password">
+                        </div>
                     </div>
-                    <div class="mb-4">
-                        <label for="password" class="block text-white">Password:</label>
-                        <input type="password" id="password" name="password" class="w-full px-3 py-2 border rounded text-gray-800" required>
-                    </div>
+
                     <div class="text-center">
-                        <button type="submit" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">Login</button>
+                        <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Sign in
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
+
     </body>
-    </html>
+</html>
