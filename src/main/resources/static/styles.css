@@ -101,5 +101,9 @@ a:hover {
         font-size: xx-large;
     }
 
+    .loadingtext {
+        font-size: medium;
+        text-align: center;
+    }
 
 }
