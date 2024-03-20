@@ -80,3 +80,26 @@ a:hover {
     cursor: not-allowed;
 }
 
+
+.surveyselect {
+    background: #171923;
+    padding: 5pt;
+}
+
+@media (max-width: 575px) {
+    #currentDate {
+        display: none;
+    }
+
+    .points {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .skinpro {
+        font-size: xx-large;
+    }
+
+
+}

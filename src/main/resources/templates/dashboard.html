@@ -12,12 +12,12 @@
 <div class="mx-auto py-12">
     <nav class="navbar">
         <div class="navbar-content">
-            <h1 class="text-4xl font-bold"><a href="/">SkinPro</a></h1>
+            <h1 class="text-4xl font-bold"><a class="skinpro" href="/">SkinPro</a></h1>
             <div id="currentDate">
                 <p class="text-white text-xl"><span id="date"></span></p>
             </div>
             <div class="navbar-links">
-                <span class="text-white ml-4" th:text="${user.points}" id="points">Points: 0</span>
+                <span class="text-white ml-4 points" th:text="${user.points}" id="points">Points: 0</span>
                 <span class="text-white ml-4" th:text="${user.username}"></span>
                 <a href="logout" class="text-white ml-4 navbar-link" id="logout">Logout</a>
             </div>

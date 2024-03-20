@@ -71,7 +71,7 @@
 
     <nav class="navbar">
         <div class="navbar-content">
-            <h1 class="text-4xl font-bold"><a href="/">SkinPro</a></h1>
+            <h1 class="text-4xl font-bold"><a class="skinpro" href="/">SkinPro</a></h1>
             <a href="logout" class="text-white ml-4 navbar-link" id="logout">Logout</a>
         </div>
     </nav>
@@ -97,7 +97,7 @@
 
                 <div class="mb-8">
                     <label class="text-xl font-bold">What is your main skin concern?</label><br>
-                    <select name="mainSkinConcern" th:field="*{mainSkinConcern}" class="w-full text-black mb-2">
+                    <select name="mainSkinConcern" th:field="*{mainSkinConcern}" class="w-full text-white mb-2 surveyselect">
                         <option value="Acne and breakouts">Acne and breakouts</option>
                         <option value="Fine lines and wrinkles">Fine lines and wrinkles</option>
                         <option value="Dullness and uneven skin tone">Dullness and uneven skin tone</option>
@@ -121,7 +121,7 @@
 
                 <div class="mb-8">
                     <label class="text-xl font-bold">What is your age range?</label><br>
-                    <select name="ageRange" th:field="*{ageRange}" class="w-full text-black mb-2">
+                    <select name="ageRange" th:field="*{ageRange}" class="w-full text-white mb-2 surveyselect">
                         <option value="Under 18">Under 18</option>
                         <option value="18-24">18-24</option>
                         <option value="25-34">25-34</option>
@@ -133,7 +133,7 @@
 
                 <div class="mb-8">
                     <label class="text-xl font-bold">How often are you exposed to the sun without protection (e.g., sunscreen)?</label><br>
-                    <select name="sunExposure" th:field="*{sunExposure}" class="w-full text-black mb-2" >
+                    <select name="sunExposure" th:field="*{sunExposure}" class="w-full text-white mb-2 surveyselect" >
                         <option value="Rarely or never">Rarely or never</option>
                         <option value="Sometimes">Sometimes</option>
                         <option value="Often">Often</option>
