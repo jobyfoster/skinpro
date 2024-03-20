@@ -64,14 +64,14 @@
                     </g>
                 </g>
             </svg>
-            <div class="mt-4 text-4xl">Preparing your curated skincare routine...</div>
+            <div class="mt-4 text-4xl loadingtext">Preparing your curated skincare routine...</div>
         </div>
     </div>
 
 
     <nav class="navbar">
         <div class="navbar-content">
-            <h1 class="text-4xl font-bold"><a href="/">SkinPro</a></h1>
+            <h1 class="text-4xl font-bold"><a class="skinpro" href="/">SkinPro</a></h1>
             <a href="logout" class="text-white ml-4 navbar-link" id="logout">Logout</a>
         </div>
     </nav>
@@ -83,21 +83,21 @@
 
                 <div class="mb-8">
                     <label class="text-xl font-bold">How would you describe your skin type?</label><br>
-                    <input type="radio" id="oily" name="skinType" value="Oily" th:field="*{skinType}" class="mr-2">
+                    <input type="radio" id="oily" name="skinType" value="Oily" th:field="*{skinType}" class="mr-2" required>
                     <label for="oily">Oily</label><br>
-                    <input type="radio" id="dry" name="skinType" value="Dry" th:field="*{skinType}" class="mr-2">
+                    <input type="radio" id="dry" name="skinType" value="Dry" th:field="*{skinType}" class="mr-2" required>
                     <label for="dry">Dry</label><br>
-                    <input type="radio" id="combination" name="skinType" value="Combination" th:field="*{skinType}" class="mr-2">
+                    <input type="radio" id="combination" name="skinType" value="Combination" th:field="*{skinType}" class="mr-2" required>
                     <label for="combination">Combination</label><br>
-                    <input type="radio" id="normal" name="skinType" value="Normal" th:field="*{skinType}" class="mr-2">
+                    <input type="radio" id="normal" name="skinType" value="Normal" th:field="*{skinType}" class="mr-2" required>
                     <label for="normal">Normal</label><br>
-                    <input type="radio" id="sensitive" name="skinType" value="Sensitive" th:field="*{skinType}" class="mr-2">
+                    <input type="radio" id="sensitive" name="skinType" value="Sensitive" th:field="*{skinType}" class="mr-2" required>
                     <label for="sensitive">Sensitive</label>
                 </div>
 
                 <div class="mb-8">
                     <label class="text-xl font-bold">What is your main skin concern?</label><br>
-                    <select name="mainSkinConcern" th:field="*{mainSkinConcern}" class="w-full text-black mb-2">
+                    <select name="mainSkinConcern" th:field="*{mainSkinConcern}" class="w-full text-white mb-2 surveyselect">
                         <option value="Acne and breakouts">Acne and breakouts</option>
                         <option value="Fine lines and wrinkles">Fine lines and wrinkles</option>
                         <option value="Dullness and uneven skin tone">Dullness and uneven skin tone</option>
@@ -109,19 +109,19 @@
 
                 <div class="mb-8">
                     <label class="text-xl font-bold">How does your skin react to new skincare products?</label><br>
-                    <input type="radio" id="positively" name="reactionToNewProducts" value="Positively" th:field="*{reactionToNewProducts}" class="mr-2">
+                    <input type="radio" id="positively" name="reactionToNewProducts" value="Positively" th:field="*{reactionToNewProducts}" class="mr-2" required>
                     <label for="positively">Positively, with few or no adverse reactions.</label><br>
-                    <input type="radio" id="negatively" name="reactionToNewProducts" value="Negatively" th:field="*{reactionToNewProducts}" class="mr-2">
+                    <input type="radio" id="negatively" name="reactionToNewProducts" value="Negatively" th:field="*{reactionToNewProducts}" class="mr-2" required>
                     <label for="negatively">Negatively, with irritation, redness, or breakouts.</label><br>
-                    <input type="radio" id="varies" name="reactionToNewProducts" value="It varies" th:field="*{reactionToNewProducts}" class="mr-2">
+                    <input type="radio" id="varies" name="reactionToNewProducts" value="It varies" th:field="*{reactionToNewProducts}" class="mr-2" required>
                     <label for="varies">It varies; some products are fine, while others cause reactions.</label><br>
-                    <input type="radio" id="noPattern" name="reactionToNewProducts" value="I haven't noticed a pattern" th:field="*{reactionToNewProducts}" class="mr-2">
+                    <input type="radio" id="noPattern" name="reactionToNewProducts" value="I haven't noticed a pattern" th:field="*{reactionToNewProducts}" class="mr-2" required>
                     <label for="noPattern">I haven't noticed a pattern in how my skin reacts.</label>
                 </div>
 
                 <div class="mb-8">
                     <label class="text-xl font-bold">What is your age range?</label><br>
-                    <select name="ageRange" th:field="*{ageRange}" class="w-full text-black mb-2">
+                    <select name="ageRange" th:field="*{ageRange}" class="w-full text-white mb-2 surveyselect">
                         <option value="Under 18">Under 18</option>
                         <option value="18-24">18-24</option>
                         <option value="25-34">25-34</option>
@@ -133,7 +133,7 @@
 
                 <div class="mb-8">
                     <label class="text-xl font-bold">How often are you exposed to the sun without protection (e.g., sunscreen)?</label><br>
-                    <select name="sunExposure" th:field="*{sunExposure}" class="w-full text-black mb-2" >
+                    <select name="sunExposure" th:field="*{sunExposure}" class="w-full text-white mb-2 surveyselect" >
                         <option value="Rarely or never">Rarely or never</option>
                         <option value="Sometimes">Sometimes</option>
                         <option value="Often">Often</option>
